@@ -186,6 +186,9 @@ h6 {
 /**
 * Appointment Button *
 */
+.form{
+margin-top: 15px;
+}
 .appointment-btn {
   margin-left: 25px;
   background: #1977cc;
@@ -196,6 +199,7 @@ h6 {
   transition: 0.3s;
   font-size: 14px;
   display: inline-block;
+  border:none;
 }
 
 .appointment-btn:hover {
