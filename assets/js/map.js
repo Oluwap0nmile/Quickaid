@@ -1,7 +1,7 @@
 // Initialize and add the map
 function initMap() {
-    // The location of the user
-    const userLocation = { lat: -34.397, lng: 150.644 }; // Default location, will be updated
+    // The location of the user (default location, will be updated)
+    const userLocation = { lat: -34.397, lng: 150.644 };
 
     // The map, centered at the user's location
     const map = new google.maps.Map(document.getElementById("map"), {
@@ -11,6 +11,11 @@ function initMap() {
 
     // InfoWindow to display location information
     const infoWindow = new google.maps.InfoWindow();
+
+    // Directions service and renderer
+    const directionsService = new google.maps.DirectionsService();
+    const directionsRenderer = new google.maps.DirectionsRenderer();
+    directionsRenderer.setMap(map);
 
     // Get the user's current location
     if (navigator.geolocation) {
@@ -43,6 +48,7 @@ function initMap() {
                                     google.maps.event.addListener(marker, "click", () => {
                                         infoWindow.setContent(place.name);
                                         infoWindow.open(map, marker);
+                                        calculateAndDisplayRoute(directionsService, directionsRenderer, pos, place.geometry.location);
                                     });
                                 }
                             });
@@ -69,6 +75,24 @@ function handleLocationError(browserHasGeolocation, infoWindow, pos) {
             : "Error: Your browser doesn't support geolocation."
     );
     infoWindow.open(map);
+}
+
+// Calculate and display the route
+function calculateAndDisplayRoute(directionsService, directionsRenderer, origin, destination) {
+    directionsService.route(
+        {
+            origin: origin,
+            destination: destination,
+            travelMode: google.maps.TravelMode.DRIVING,
+        },
+        (response, status) => {
+            if (status === google.maps.DirectionsStatus.OK) {
+                directionsRenderer.setDirections(response);
+            } else {
+                window.alert("Directions request failed due to " + status);
+            }
+        }
+    );
 }
 
 // Load the map
