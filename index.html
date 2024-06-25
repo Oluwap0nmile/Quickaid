@@ -60,11 +60,11 @@
 
       <nav id="navbar" class="navbar order-last order-lg-0">
         <ul> 
-          <li><a class="nav-link scrollto active" href="#hero">Home</a></li>
-          <li><a class="nav-link scrollto" href="./about.html">About</a></li>
-          <li><a class="nav-link scrollto" href="./services.html">Services</a></li>
-          <li><a class="nav-link scrollto" href="./department.html">Departments</a></li>
-          <!-- <li><a class="nav-link scrollto" href="#doctors">Doctors</a></li> -->
+          <li><a class="nav-link active" href="#hero">Home</a></li>
+          <li><a class="nav-link" href="./about.html">About</a></li>
+          <li><a class="nav-link" href="./services.html">Services</a></li>
+          <li><a class="nav-link" href="./department.html">Departments</a></li>
+          <!-- <li><a class="nav-link" href="#doctors">Doctors</a></li> -->
           <li class="dropdown"><a href="#"><span>Drop Down</span> <i class="bi bi-chevron-down"></i></a>
             <ul>
               <li><a href="#">Drop Down 1</a></li>
@@ -82,12 +82,12 @@
               <li><a href="#">Drop Down 4</a></li>
             </ul>
           </li>
-          <li><a class="nav-link scrollto" href="#contact">Contact</a></li>
+          <li><a class="nav-link" href="./contact.html">Contact</a></li>
         </ul>
         <i class="bi bi-list mobile-nav-toggle"></i>
       </nav><!-- .navbar -->
 
-      <a href="#appointment" class="appointment-btn scrollto"><span class="d-none d-md-inline">Report an</span> Emergency</a>
+      <a href="#appointment" class="appointment-btn"><span class="d-none d-md-inline">Report an</span> Emergency</a>
 
     </div>
   </header><!-- End Header -->
@@ -97,7 +97,7 @@
     <div class="container">
       <h1>Welcome to QuickAid</h1>
       <h2>We are a dedicated team focused on creating innovative solutions to ensure your safety and provide timely assistance in emergencies.</h2>
-      <a href="./about.html" class="btn-get-started scrollto">Get Started</a>
+      <a href="./about.html" class="btn-get-started">Get Started</a>
     </div>
   </section><!-- End Hero -->
 
@@ -294,109 +294,7 @@
       </div>
     </section><!-- End Services Section -->
 
-    <!-- ======= Appointment Section ======= -->
-    <!-- <section id="appointment" class="appointment section-bg">
-      <div class="container">
 
-        <div class="section-title">
-          <h2>Make an Appointment</h2>
-          <p>Quickly schedule your appointment with our easy-to-use form. Fill in your details, select your preferred department and doctor, and choose a convenient date and time. We'll confirm your appointment promptly!</p>
-        </div>
-
-        <form action="forms/appointment.php" method="post" role="form" class="php-email-form">
-          <div class="row">
-            <div class="col-md-4 form-group">
-              <input type="text" name="name" class="form-control" id="name" placeholder="Your Name" data-rule="minlen:4" data-msg="Please enter at least 4 chars">
-              <div class="validate"></div>
-            </div>
-            <div class="col-md-4 form-group mt-3 mt-md-0">
-              <input type="email" class="form-control" name="email" id="email" placeholder="Your Email" data-rule="email" data-msg="Please enter a valid email">
-              <div class="validate"></div>
-            </div>
-            <div class="col-md-4 form-group mt-3 mt-md-0">
-              <input type="tel" class="form-control" name="phone" id="phone" placeholder="Your Phone" data-rule="minlen:4" data-msg="Please enter at least 4 chars">
-              <div class="validate"></div>
-            </div>
-          </div>
-          <div class="row">
-            <div class="col-md-4 form-group mt-3">
-              <input type="datetime" name="date" class="form-control datepicker" id="date" placeholder="Appointment Date" data-rule="minlen:4" data-msg="Please enter at least 4 chars">
-              <div class="validate"></div>
-            </div>
-            <div class="col-md-4 form-group mt-3">
-              <select name="department" id="department" class="form-select">
-                <option value="">Select Department</option>
-                <option value="Department 1">Department 1</option>
-                <option value="Department 2">Department 2</option>
-                <option value="Department 3">Department 3</option>
-              </select>
-              <div class="validate"></div>
-            </div>
-            <div class="col-md-4 form-group mt-3">
-              <select name="doctor" id="doctor" class="form-select">
-                <option value="">Select Doctor</option>
-                <option value="Doctor 1">Doctor 1</option>
-                <option value="Doctor 2">Doctor 2</option>
-                <option value="Doctor 3">Doctor 3</option>
-              </select>
-              <div class="validate"></div>
-            </div>
-          </div>
-
-          <div class="form-group mt-3">
-            <textarea class="form-control" name="message" rows="5" placeholder="Message (Optional)"></textarea>
-            <div class="validate"></div>
-          </div>
-          <div class="mb-3">
-            <div class="loading">Loading</div>
-            <div class="error-message"></div>
-            <div class="sent-message">Your appointment request has been sent successfully. Thank you!</div>
-          </div>
-          <div class="text-center"><button type="submit">Make an Appointment</button></div>
-        </form>
-
-      </div>
-    </section>End Appointment Section -->
-    <!-- ======= Emergency Contact Section ======= -->
-<section id="emergency-contact" class="emergency-contact section-bg">
-  <div class="container">
-
-    <div class="section-title">
-      <h2>Register Emergency Contacts</h2>
-      <p>Ensure your safety by registering your emergency contacts. Fill in the details of your trusted contacts who will be notified during emergencies.</p>
-    </div>
-
-    <form action="forms/emergency-contact.php" method="post" role="form" class="php-email-form">
-      <div class="row">
-        <div class="col-md-4 form-group">
-          <input type="text" name="contact_name" class="form-control" id="contact_name" placeholder="Contact Name" data-rule="minlen:4" data-msg="Please enter at least 4 chars">
-          <div class="validate"></div>
-        </div>
-        <div class="col-md-4 form-group mt-3 mt-md-0">
-          <input type="email" class="form-control" name="contact_email" id="contact_email" placeholder="Contact Email" data-rule="email" data-msg="Please enter a valid email">
-          <div class="validate"></div>
-        </div>
-        <div class="col-md-4 form-group mt-3 mt-md-0">
-          <input type="tel" class="form-control" name="contact_phone" id="contact_phone" placeholder="Contact Phone" data-rule="minlen:4" data-msg="Please enter at least 4 chars">
-          <div class="validate"></div>
-        </div>
-      </div>
-      <div class="form-group mt-3">
-        <textarea class="form-control" name="relationship" rows="2" placeholder="Relationship" data-rule="minlen:2" data-msg="Please enter at least 2 chars"></textarea>
-        <div class="validate"></div>
-
- 
-      <div class="text-center"><button class="appointment-btn form" type="submit">Register Contact</button></div>
-      <div class="mb-3">
-        <div class="loading">Loading</div>
-        <div class="error-message"></div>
-        <div class="sent-message">Your emergency contact has been registered successfully. Thank you!</div>
-      </div>
-      
-    </form>
-
-  </div>
-</section><!-- End Emergency Contact Section -->
 
 
     <!-- ======= Departments Section ======= -->
