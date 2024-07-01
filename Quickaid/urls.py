@@ -23,6 +23,11 @@ from pages.views import (
     about,
     services,
 
+
+)
+from users.views import (
+    register,
+    login_view
 )
 
 urlpatterns = [
@@ -31,6 +36,8 @@ urlpatterns = [
     path('about/', about, name= 'about'),
     path('contact/', contact, name= 'contact'),
     path('department/',department ,name='department'),
-    path('services/',services , name='services')
+    path('services/',services , name='services'),
+    path('register/', register, name='register'),
+    path('login/', login_view, name='login'),
     
 ]
