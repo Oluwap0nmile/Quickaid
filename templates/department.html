@@ -1,3 +1,5 @@
+{% load static %}
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -9,21 +11,21 @@
     <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i|Raleway:300,300i,400,400i,500,500i,600,600i,700,700i|Poppins:300,300i,400,400i,500,500i,600,600i,700,700i" rel="stylesheet">
 
     <!-- Favicons -->
-    <link href="assets/img/plus-medical-regular-24.png" rel="icon">
-    <link href="assets/img/plus-medical-regular-24.png" rel="apple-touch-icon">
+    <link href="{% static 'img/plus-medical-regular-24.png' %}" rel="icon">
+    <link href="{% static 'img/plus-medical-regular-24.png' %}" rel="apple-touch-icon">
 
     <!-- Vendor CSS Files -->
-    <link href="assets/vendor/fontawesome-free/css/all.min.css" rel="stylesheet">
-    <link href="assets/vendor/animate.css/animate.min.css" rel="stylesheet">
-    <link href="assets/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
-    <link href="assets/vendor/bootstrap-icons/bootstrap-icons.css" rel="stylesheet">
-    <link href="assets/vendor/boxicons/css/boxicons.min.css" rel="stylesheet">
-    <link href="assets/vendor/glightbox/css/glightbox.min.css" rel="stylesheet">
-    <link href="assets/vendor/remixicon/remixicon.css" rel="stylesheet">
-    <link href="assets/vendor/swiper/swiper-bundle.min.css" rel="stylesheet">
+    <link href="{% static 'vendor/fontawesome-free/css/all.min.css' %}" rel="stylesheet">
+    <link href="{% static 'vendor/animate.css/animate.min.css' %}" rel="stylesheet">
+    <link href="{% static 'vendor/bootstrap/css/bootstrap.min.css' %}" rel="stylesheet">
+    <link href="{% static 'vendor/bootstrap-icons/bootstrap-icons.css' %}" rel="stylesheet">
+    <link href="{% static 'vendor/boxicons/css/boxicons.min.css' %}" rel="stylesheet">
+    <link href="{% static 'vendor/glightbox/css/glightbox.min.css' %}" rel="stylesheet">
+    <link href="{% static 'vendor/remixicon/remixicon.css' %}" rel="stylesheet">
+    <link href="{% static 'vendor/swiper/swiper-bundle.min.css' %}" rel="stylesheet">
 
   <!-- Main CSS File -->
-  <link href="assets/css/style.css" rel="stylesheet">
+  <link href="{% static 'css/style.css' %}" rel="stylesheet">
 </head>
 <body>
     <header id="header" class="fixed-top">
@@ -31,17 +33,17 @@
     
           <h1 class="logo me-auto"><a href="index.html">QuickAid</a></h1>
     
-          <!-- <a href="index.html" class="logo me-auto"><img src="assets/img/logo.png" alt="" class="img-fluid"></a>-->
+          <!-- <a href="index.html" class="logo me-auto"><img src="{% static 'img/logo.png' %}" alt="" class="img-fluid"></a>-->
     
           <nav id="navbar" class="navbar order-last order-lg-0">
             <ul>
-              <li><a class="nav-link scrollto active" href="./index.html">Home</a></li>
-              <li><a class="nav-link scrollto" href="./about.html">About</a></li>
-              <li><a class="nav-link scrollto" href="./services.html">Services</a></li>
-              <li><a class="nav-link scrollto active" href="./department.html">Departments</a></li>
+              <li><a class="nav-link scrollto active" href="{% url 'home' %}">Home</a></li>
+              <li><a class="nav-link scrollto" href="{% url 'about' %}">About</a></li>
+              <li><a class="nav-link scrollto" href="{% url 'services' %}">Services</a></li>
+              <li><a class="nav-link scrollto active" href="{% url 'department' %}">Departments</a></li>
               <!-- <li><a class="nav-link scrollto" href="#doctors">Doctors</a></li> -->
 
-              <li><a class="nav-link scrollto" href="./contact.html">Contact</a></li>
+              <li><a class="nav-link scrollto" href="{% url 'contact' %}">Contact</a></li>
             </ul>
             <i class="bi bi-list mobile-nav-toggle"></i>
           </nav><!-- .navbar -->
@@ -106,7 +108,7 @@
                       <p>Focused on the diagnosis and treatment of heart conditions and diseases, our cardiology department provides expert care for heart attacks, arrhythmias, and other cardiovascular issues. Our cardiologists are equipped with the latest technology to offer comprehensive cardiac care.</p>
                     </div>
                     <div class="col-lg-4 text-center order-1 order-lg-2">
-                      <img src="assets/img/departments-1.jpg" alt="" class="img-fluid">
+                      <img src="{% static 'img/departments-1.jpg' %}" alt="" class="img-fluid">
                     </div>
                   </div>
                 </div>
@@ -117,7 +119,7 @@
                       <p>Available 24/7, our emergency medicine department provides immediate care for urgent medical conditions. Our emergency physicians and nurses are trained to handle a wide range of emergencies, ensuring you receive timely and effective treatment.</p>
                     </div>
                     <div class="col-lg-4 text-center order-1 order-lg-2">
-                      <img src="assets/img/pexels-cdc-library-3993317.jpg" alt="" class="img-fluid">
+                      <img src="{% static 'img/pexels-cdc-library-3993317.jpg' %}" alt="" class="img-fluid">
                     </div>
                   </div>
                 </div>
@@ -128,7 +130,7 @@
                       <p>Specializing in liver, gallbladder, biliary tree, and pancreas disorders, our hepatology department offers expert care for conditions such as hepatitis, cirrhosis, and liver cancer. Our hepatologists are dedicated to providing personalized treatment plans.</p>
                     </div>
                     <div class="col-lg-4 text-center order-1 order-lg-2">
-                      <img src="assets/img/departments-3.jpg" alt="" class="img-fluid">
+                      <img src="{% static 'img/departments-3.jpg' %}" alt="" class="img-fluid">
                     </div>
                   </div>
                 </div>
@@ -140,7 +142,7 @@
                         Our pediatrics department offers comprehensive healthcare services for infants, children, and adolescents. From routine check-ups to treatment of complex conditions, our pediatricians ensure the health and well-being of your child. </p>
                     </div>
                     <div class="col-lg-4 text-center order-1 order-lg-2">
-                      <img src="assets/img/departments-4.jpg" alt="" class="img-fluid">
+                      <img src="{% static 'img/departments-4.jpg' %}" alt="" class="img-fluid">
                     </div>
                   </div>
                 </div>
@@ -152,7 +154,7 @@
                       <p>The eye care department provides a wide range of services, including vision testing, treatment of eye diseases, and surgical procedures. Our ophthalmologists and optometrists are committed to preserving and improving your vision.</p>
                     </div>
                     <div class="col-lg-4 text-center order-1 order-lg-2">
-                      <img src="assets/img/departments-5.jpg" alt="" class="img-fluid">
+                      <img src="{% static 'img/departments-5.jpg' %}" alt="" class="img-fluid">
                     </div>
                   </div>
                 </div>
@@ -233,13 +235,13 @@
     </div>
   </footer><!-- End Footer -->
 
-      <script src="assets/vendor/purecounter/purecounter_vanilla.js"></script>
-      <script src="assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
-      <script src="assets/vendor/glightbox/js/glightbox.min.js"></script>
-      <script src="assets/vendor/swiper/swiper-bundle.min.js"></script>
+      <script src="{% static 'vendor/purecounter/purecounter_vanilla.js' %}"></script>
+      <script src="{% static 'vendor/bootstrap/js/bootstrap.bundle.min.js' %}"></script>
+      <script src="{% static 'vendor/glightbox/js/glightbox.min.js' %}"></script>
+      <script src="{% static 'vendor/swiper/swiper-bundle.min.js' %}"></script>
       
     
     
-      <script src="assets/js/main.js"></script>
+      <script src="{% static 'js/main.js' %}"></script>
 </body>
 </html>
