@@ -22,6 +22,8 @@ from pages.views import (
     department,
     about,
     services,
+    logout_view
+  
 
 
 )
@@ -39,5 +41,7 @@ urlpatterns = [
     path('services/',services , name='services'),
     path('register/', register, name='register'),
     path('login/', login_view, name='login'),
+    path('logout/', logout_view, name='logout'),
+    
     
 ]
