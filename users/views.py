@@ -56,14 +56,14 @@ def emergency_contact_view(request):
             emergency_contact.save()
 
             # Send WhatsApp message
-            to = f"whatsapp:{emergency_contact.contact_phone}"
-            body = (
-                f"Emergency! {request.user.username} is in an emergency situation. "
-                f"Location: https://www.google.com/maps?q={request.POST.get('latitude')},{request.POST.get('longitude')}"
-            )
-            send_whatsapp_message(to, body)
+            # to = f"whatsapp:{emergency_contact.contact_phone}"
+            # body = (
+            #     f"Emergency! {request.user.username} is in an emergency situation. "
+            #     f"Location: https://www.google.com/maps?q={request.POST.get('latitude')},{request.POST.get('longitude')}"
+            # )
+            # send_whatsapp_message(to, body)
 
-            messages.success(request, 'Emergency contact has been registered and notified.')
+            # messages.success(request, 'Emergency contact has been registered and notified.')
             return redirect('services')
     else:
         form = EmergencyContactForm()
