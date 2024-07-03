@@ -2,8 +2,9 @@ from django.shortcuts import render,redirect
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth import logout
 from django.urls import reverse
-from .forms import EmergencyContactForm
-
+from users.forms import EmergencyContactForm
+from users.utils import send_whatsapp_message
+from users.models import EmergencyContact
 # Create your views here.
 def index(request):
     return render(request, 'index.html')
@@ -55,8 +56,8 @@ def logout_view(request):
 # pages/views.py
 
 
-from .models import EmergencyContact
-from .utils import send_whatsapp_message
+
+
 
 from django.contrib import messages
 

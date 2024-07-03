@@ -101,17 +101,28 @@
 
 <!-- services.html -->
 
-<form action="{% url 'services' %}" method="post" role="form" class="php-email-form">
+<form action="{% url 'emergency_contact' %}" method="post" role="form" class="php-email-form">
   {% csrf_token %}
-  {{ form.as_p }}
-  <input type="hidden" name="latitude" id="latitude">
-  <input type="hidden" name="longitude" id="longitude">
+  <div class="row">
+      <div class="col-md-4 form-group">
+          <label for="id_contact_name">Contact Name</label>
+          {{ form.contact_name }}
+          <div class="validate"></div>
+      </div>
+      <div class="col-md-4 form-group mt-3 mt-md-0">
+          <label for="id_contact_phone">Contact Phone</label>
+          {{ form.contact_phone }}
+          <div class="validate"></div>
+      </div>
+      <div class="col-md-4 form-group mt-3 mt-md-0">
+          <label for="id_relationship">Relationship</label>
+          {{ form.relationship }}
+          <div class="validate"></div>
+      </div>
+  </div>
   <div class="text-center">
       <button class="appointment-btn form" type="submit">Register Contact</button>
   </div>
-  {% if success %}
-  <div class="sent-message">Your emergency contact has been registered successfully. Thank you!</div>
-  {% endif %}
 </form>
 
 <script>
