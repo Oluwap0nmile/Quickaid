@@ -97,37 +97,36 @@
           <p>Ensure your safety by registering your emergency contacts. Fill in the details of your trusted contacts who will be notified during emergencies.</p>
         </div>
     
-        <form action="{% url 'services' %}" method="post" role="form" class="php-email-form">
-          {% csrf_token %}
-          <div class="row">
-              <div class="col-md-4 form-group">
-                  {{ form.contact_name.label_tag }} {{ form.contact_name }}
-                  <div class="validate"></div>
-              </div>
-              <div class="col-md-4 form-group mt-3 mt-md-0">
-                  {{ form.contact_email.label_tag }} {{ form.contact_email }}
-                  <div class="validate"></div>
-              </div>
-              <div class="col-md-4 form-group mt-3 mt-md-0">
-                  {{ form.contact_phone.label_tag }} {{ form.contact_phone }}
-                  <div class="validate"></div>
-              </div>
-          </div>
-          <div class="form-group mt-3">
-              {{ form.relationship.label_tag }} {{ form.relationship }}
-              <div class="validate"></div>
-          </div>
-          <div class="text-center">
-              <button class="appointment-btn form" type="submit">Register Contact</button>
-          </div>
-          <div class="mb-3">
-              <div class="loading">Loading</div>
-              <div class="error-message"></div>
-              {% if success %}
-              <div class="sent-message">Your emergency contact has been registered successfully. Thank you!</div>
-              {% endif %}
-          </div>
-      </form>
+       <!-- templates/services.html -->
+
+<!-- services.html -->
+
+<form action="{% url 'services' %}" method="post" role="form" class="php-email-form">
+  {% csrf_token %}
+  {{ form.as_p }}
+  <input type="hidden" name="latitude" id="latitude">
+  <input type="hidden" name="longitude" id="longitude">
+  <div class="text-center">
+      <button class="appointment-btn form" type="submit">Register Contact</button>
+  </div>
+  {% if success %}
+  <div class="sent-message">Your emergency contact has been registered successfully. Thank you!</div>
+  {% endif %}
+</form>
+
+<script>
+  function getLocation() {
+      if (navigator.geolocation) {
+          navigator.geolocation.getCurrentPosition(function (position) {
+              document.getElementById('latitude').value = position.coords.latitude;
+              document.getElementById('longitude').value = position.coords.longitude;
+          });
+      }
+  }
+  window.onload = getLocation;
+</script>
+
+
   
     
       </div>

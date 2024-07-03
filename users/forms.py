@@ -4,7 +4,7 @@
 from django import forms
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.models import User
-from .models import EmergencyContact
+from pages.models import EmergencyContact 
 class RegistrationForm(UserCreationForm):
     email = forms.EmailField(max_length=254, help_text='Required. Enter a valid email address.')
 
@@ -15,8 +15,13 @@ class RegistrationForm(UserCreationForm):
 
 
 
-class EmergencyContactForm(forms.ModelForm):
+
+# users/forms.py
+
+
+
+
+class RegistrationForm(forms.ModelForm):
     class Meta:
         model = EmergencyContact
         fields = ['contact_name', 'contact_email', 'contact_phone', 'relationship']
-
