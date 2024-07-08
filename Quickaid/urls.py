@@ -48,4 +48,6 @@ urlpatterns = [
     path('emergency_contact/', emergency_contact_view, name='emergency_contact'),
     
     
+    
+    
 ]

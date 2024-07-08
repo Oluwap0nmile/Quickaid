@@ -1,15 +1,10 @@
 # users/utils.py
 
-from twilio.rest import Client
+import requests
+from django.conf import settings
 
-def send_whatsapp_message(to, body):
-    account_sid = 'your_account_sid'
-    auth_token = 'your_auth_token'
-    client = Client(account_sid, auth_token)
-
-    message = client.messages.create(
-        body=body,
-        from_='whatsapp:+12056864631',  # This is Twilio's sandbox number
-        to=to
-    )
-    return message.sid
+def send_telegram_message(chat_id, text):
+    url = f'https://api.telegram.org/bot{settings.TELEGRAM_BOT_TOKEN}/sendMessage'
+    payload = {'chat_id': chat_id, 'text': text}
+    response = requests.post(url, json=payload)
+    return response.json()

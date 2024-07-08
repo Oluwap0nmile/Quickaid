@@ -6,7 +6,9 @@ from .forms import RegistrationForm
 from django.contrib import messages
 from .forms import EmergencyContactForm
 from users.models import EmergencyContact
-from users.utils import send_whatsapp_message
+from users.utils import send_telegram_message
+from django.urls import reverse_lazy
+from django.views.generic.edit import DeleteView
 
 # Create your views here.
 # def register(request):
@@ -70,6 +72,22 @@ def emergency_contact_view(request):
 
     return render(request, 'services.html', {'form': form})
 
+class EmergencyContactDeleteView(DeleteView):
+    model = EmergencyContact
+    template_name = 'users/emergency_contact_confirm_delete.html'
+    success_url = reverse_lazy('emergency_contact')
+
+@login_required
+def send_emergency_message(request):
+    if request.method == 'POST':
+        contacts = EmergencyContact.objects.filter(user=request.user)
+        latitude = request.POST.get('latitude')
+        longitude = request.POST.get('longitude')
+        message_body = f"Emergency! The user is in danger. Current location: https://www.google.com/maps?q={latitude},{longitude}"
+        for contact in contacts:
+            send_telegram_message(contact.contact_phone, message_body)  # Assuming contact_phone is the Telegram chat ID
+        return redirect('services')
+    return render(request, 'Quickaid/services.html')    
 
 
 

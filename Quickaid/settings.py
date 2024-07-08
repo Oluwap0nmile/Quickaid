@@ -87,6 +87,8 @@ TWILIO_ACCOUNT_SID = 'ACdd68d964a06a71db042d57dffcc388eb'
 TWILIO_AUTH_TOKEN = '139e939fd661436cb8ec98eb21fdd2da'
 TWILIO_WHATSAPP_NUMBER = 'whatsapp:+12056864631'  # Twilio WhatsApp sandbox number
 
+TELEGRAM_BOT_TOKEN = '7434036135:AAFap6m_cje5igj5gvj4NUMGcxuxlx7PYEM'
+
 
 
 # Database

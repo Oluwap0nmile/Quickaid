@@ -64,7 +64,7 @@
           <li><a class="nav-link active" href="{% url 'home' %}">Home</a></li>
           <li><a class="nav-link" href="{% url 'about' %}">About</a></li>
           <li><a class="nav-link" href="{% url 'services' %}">Services</a></li>
-          <li><a class="nav-link" href="{% url 'department' %}">Departments</a></li>
+          <!-- <li><a class="nav-link" href="{% url 'department' %}">Departments</a></li> -->
           <!-- <li><a class="nav-link" href="#doctors">Doctors</a></li> -->
 
           <li><a class="nav-link" href="{% url 'contact' %}">Contact</a></li>
@@ -120,11 +120,12 @@
             <div class="icon-boxes d-flex flex-column justify-content-center">
               <div class="row">
                 <div class="col-xl-4 d-flex align-items-stretch">
-                  <div class="icon-box mt-4 mt-xl-0">
+                  <a href="{% url 'services' %}"> <div class="icon-box mt-4 mt-xl-0" >
                     <i class='bx bxs-location-plus'></i>
                     <h4>Real-Time Location Detection</h4>
                     <p>Integrated GPS technology to automatically pinpoint your location during emergencies.</p>
-                  </div>
+                  </div> </a>
+                 
                 </div>
                 <div class="col-xl-4 d-flex align-items-stretch">
                   <div class="icon-box mt-4 mt-xl-0">
@@ -278,13 +279,13 @@
             </div>
           </div>
 
-          <div class="col-lg-4 col-md-6 d-flex align-items-stretch mt-4">
+          <!-- <div class="col-lg-4 col-md-6 d-flex align-items-stretch mt-4">
             <div class="icon-box">
               <div class="icon"><i class="fas fa-notes-medical"></i></div>
               <h4><a href="">User Medical Profile</a></h4>
               <p>Stores vital medical information, such as allergies, medications, and medical history, for quick access during emergencies.</p>
             </div>
-          </div>
+          </div> -->
 
         </div>
 
@@ -558,9 +559,9 @@
             <div class="swiper-slide">
               <div class="testimonial-wrap">
                 <div class="testimonial-item">
-                  <img src="{% static 'img/testimonials/testimonials-1.jpg' %}" class="testimonial-img" alt="">
-                  <h3>Saul Goodman</h3>
-                  <h4>Ceo &amp; Founder</h4>
+                  <img src="{% static 'img/testimonials/testimonials-1.png' %}" class="testimonial-img" alt="">
+                  <h3>Opeyemi Ademola</h3>
+                  <h4>Local Resident</h4>
                   <p>
                     <i class="bx bxs-quote-alt-left quote-icon-left"></i>
                     QuickAid is fantastic! It has really helped us respond faster during emergencies. I can’t recommend it enough.
@@ -574,8 +575,8 @@
               <div class="testimonial-wrap">
                 <div class="testimonial-item">
                   <img src="{% static 'img/testimonials/testimonials-2.jpg' %}" class="testimonial-img" alt="">
-                  <h3>Sara Wilsson</h3>
-                  <h4>Designer</h4>
+                  <h3>Ojanuga Adedamola</h3>
+                  <h4>Local Resident</h4>
                   <p>
                     <i class="bx bxs-quote-alt-left quote-icon-left"></i>
                     I love how easy QuickAid is to use. The interface is so intuitive and it’s become an essential part of our team’s toolkit.
@@ -590,7 +591,7 @@
                 <div class="testimonial-item">
                   <img src="{% static 'img/testimonials/testimonials-3.jpg' %}" class="testimonial-img" alt="">
                   <h3>Jena Karlis</h3>
-                  <h4>Store Owner</h4>
+                  <h4>Danfo driver</h4>
                   <p>
                     <i class="bx bxs-quote-alt-left quote-icon-left"></i>
                     The emergency alert feature is a lifesaver. It’s comforting to know that help is just a button press away
@@ -604,8 +605,8 @@
               <div class="testimonial-wrap">
                 <div class="testimonial-item">
                   <img src="{% static 'img/testimonials/testimonials-4.jpg' %}" class="testimonial-img" alt="">
-                  <h3>Matt Brandon</h3>
-                  <h4>Freelancer</h4>
+                  <h3>Aliyu Adamu</h3>
+                  <h4>Okada rider</h4>
                   <p>
                     <i class="bx bxs-quote-alt-left quote-icon-left"></i>
                     QuickAid’s location detection is spot on. It makes sure we get help exactly where it’s needed, quickly and efficiently.
@@ -619,7 +620,7 @@
               <div class="testimonial-wrap">
                 <div class="testimonial-item">
                   <img src="{% static 'img/testimonials/testimonials-5.jpg' %}" class="testimonial-img" alt="">
-                  <h3>John Larson</h3>
+                  <h3>Haleem Akintayo</h3>
                   <h4>Entrepreneur</h4>
                   <p>
                     <i class="bx bxs-quote-alt-left quote-icon-left"></i>

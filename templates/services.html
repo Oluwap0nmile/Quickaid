@@ -46,7 +46,7 @@
               <li><a class="nav-link scrollto active" href="{% url 'home' %}">Home</a></li>
               <li><a class="nav-link scrollto" href="{% url 'about' %}">About</a></li>
               <li><a class="nav-link scrollto" href="{% url 'services' %}">Services</a></li>
-              <li><a class="nav-link scrollto" href="{% url 'department' %}">Departments</a></li>
+              <!--   -->
               <!-- <li><a class="nav-link scrollto" href="#doctors">Doctors</a></li> -->
 
               <li><a class="nav-link scrollto" href="{% url 'contact' %}">Contact</a></li>
@@ -124,6 +124,89 @@
       <button class="appointment-btn form" type="submit">Register Contact</button>
   </div>
 </form>
+<!-- <div class="row gx-4 gx-lg-5 row-cols-2 row-cols-md-3 row-cols-xl-4 justify-content-center">
+  <div class="col mb-5">
+      <div class="card h-100"> -->
+          
+          <!-- <img class="card-img-top" src="{% static 'img/empty-emergency-box.png' %}" alt="..." /> -->
+
+          <!-- <div class="card-body p-4">
+              <div class="text-center">
+                  
+                  <h5 class="fw-bolder">Send Emergency Alert</h5>
+                  
+                  To  your registered contacts
+              </div>
+          </div> -->
+          <!-- Product actions-->
+          <!-- <div class="card-footer p-4 pt-0 border-top-0 bg-transparent">
+              <div class="text-center "><a class="btn btn-outline-dark mt-auto" href="#">Report an Emergency</a></div>
+          </div>
+      </div>
+  </div> -->
+
+
+ 
+
+
+  <h2>Services</h2>
+  <h3>Emergency Contacts</h3>
+  <table class="table table-bordered">
+    <thead>
+        <tr>
+            <th>#</th>
+            <th>Contact Name</th>
+            <th>Contact Phone</th>
+            <th>Relationship</th>
+            <th>Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for contact in emergency_contacts %}
+        <tr>
+            <td>{{ forloop.counter }}</td>
+            <td>{{ contact.contact_name }}</td>
+            <td>{{ contact.contact_phone }}</td>
+            <td>{{ contact.relationship }}</td>
+            <td>
+                <form method="post" action="{% url 'services' %}" style="display:inline;">
+                    {% csrf_token %}
+                    <input type="hidden" name="contact_id" value="{{ contact.id }}">
+                    <button type="submit" class="btn btn-danger btn-sm">Delete</button>
+                </form>
+            </td>
+        </tr>
+        {% empty %}
+        <tr>
+            <td colspan="5">No emergency contacts found.</td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+
+<div class="row gx-4 gx-lg-5 row-cols-2 row-cols-md-3 row-cols-xl-4 justify-content-center">
+  <div class="col mb-5">
+      <div class="card h-100">
+          <img class="card-img-top" src="{% static 'img/empty-emergency-box.png' %}" alt="..." />
+          <div class="card-body p-4">
+              <div class="text-center">
+                  <h5 class="fw-bolder">Send Emergency Alert</h5>
+                  To your registered contacts
+              </div>
+          </div>
+          <div class="card-footer p-4 pt-0 border-top-0 bg-transparent">
+              <div class="text-center">
+                  <form method="post" action="{% url 'send_emergency_message' %}">
+                      {% csrf_token %}
+                      <input type="hidden" id="latitude" name="latitude">
+                      <input type="hidden" id="longitude" name="longitude">
+                      <button type="submit" class="btn btn-outline-dark mt-auto">Report an Emergency</button>
+                  </form>
+              </div>
+          </div>
+      </div>
+  </div>
+</div>
 
 <script>
   function getLocation() {
