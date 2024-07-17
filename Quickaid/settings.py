@@ -31,10 +31,13 @@ ALLOWED_HOSTS = [
     'localhost',
     '54ef-102-89-34-96.ngrok-free.app',  
     '192.168.0.137'
+    '916c-102-89-32-128.ngrok-free.app',
+    '916c-102-89-32-128.ngrok-free.app'
 ]
 
 CSRF_TRUSTED_ORIGINS = [
     'https://54ef-102-89-34-96.ngrok-free.app',
+    'https://916c-102-89-32-128.ngrok-free.app'
 ]
 
 # Application definition
@@ -89,6 +92,11 @@ TWILIO_WHATSAPP_NUMBER = 'whatsapp:+12056864631'  # Twilio WhatsApp sandbox numb
 
 TELEGRAM_BOT_TOKEN = '7434036135:AAFap6m_cje5igj5gvj4NUMGcxuxlx7PYEM'
 
+# settings.py
+
+VONAGE_API_KEY = '7aa20adc'
+VONAGE_API_SECRET = 'SQf7LIk2eYvtKM4l'
+VONAGE_PHONE_NUMBER = 'your_vonage_phone_number'
 
 
 # Database

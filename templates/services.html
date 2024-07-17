@@ -196,7 +196,7 @@
           </div>
           <div class="card-footer p-4 pt-0 border-top-0 bg-transparent">
               <div class="text-center">
-                  <form method="post" action="{% url 'send_emergency_message' %}">
+                  <form method="post" action="{% url 'send_emergency_sms' %}">
                       {% csrf_token %}
                       <input type="hidden" id="latitude" name="latitude">
                       <input type="hidden" id="longitude" name="longitude">
@@ -210,16 +210,25 @@
 
 <script>
   function getLocation() {
-      if (navigator.geolocation) {
-          navigator.geolocation.getCurrentPosition(function (position) {
-              document.getElementById('latitude').value = position.coords.latitude;
-              document.getElementById('longitude').value = position.coords.longitude;
-          });
-      }
-  }
-  window.onload = getLocation;
+    if (navigator.geolocation) {
+        navigator.geolocation.getCurrentPosition(function (position) {
+            fetch('{% url "update_location" %}', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'X-CSRFToken': '{{ csrf_token }}'
+                },
+                body: JSON.stringify({
+                    latitude: position.coords.latitude,
+                    longitude: position.coords.longitude
+                })
+            });
+        });
+    }
+}
+window.onload = getLocation;
 </script>
-
+  
 
   
     
