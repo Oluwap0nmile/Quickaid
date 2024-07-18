@@ -8,6 +8,7 @@ class EmergencyContact(models.Model):
     contact_name = models.CharField(max_length=100)
     contact_phone = models.CharField(max_length=15)
     relationship = models.CharField(max_length=100)
+    chat_id = models.CharField(max_length=20, null=True, blank=True)
     latitude = models.FloatField(null=True, blank=True)
     longitude = models.FloatField(null=True, blank=True)
 

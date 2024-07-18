@@ -1,35 +1,18 @@
-from django.shortcuts import render, redirect,get_object_or_404
+from django.shortcuts import render, redirect
 from django.contrib.auth import authenticate, login, logout
-from django.contrib.auth.forms import  AuthenticationForm
+from django.contrib.auth.forms import AuthenticationForm
 from django.contrib.auth.decorators import login_required
-from .forms import RegistrationForm
-# from django.contrib import messages
-from .forms import EmergencyContactForm
+from .forms import RegistrationForm, EmergencyContactForm
 from users.models import EmergencyContact
-import vonage
-
+import requests
 from django.urls import reverse_lazy
 from django.views.generic.edit import DeleteView
 from django.conf import settings
 import json
-from django.http import JsonResponse,HttpResponse
+from django.http import JsonResponse, HttpResponse
 from django.views.decorators.csrf import csrf_exempt
-from .utils import send_sms
-from .models import EmergencyContact
 
-# Create your views here.
-# def register(request):
-#     if request.method == 'POST':
-#         form = SignUpForm(request.POST)
-#         if form.is_valid():
-#             user = form.save()
-#             login(request, user)
-#             return redirect('home')  # Replace 'home' with your homepage URL name
-#     else:
-#         form = SignUpForm()
-#     return render(request, 'register.html', {'form': form})
-
-
+# Login view
 def login_view(request):
     if request.method == 'POST':
         form = AuthenticationForm(request, data=request.POST)
@@ -44,18 +27,18 @@ def login_view(request):
         form = AuthenticationForm()
     return render(request, 'login.html', {'form': form})
 
+# Register view
 def register(request):
     if request.method == 'POST':
         form = RegistrationForm(request.POST)
         if form.is_valid():
-            form.save()  # Save the user
-            # Redirect to a success page or login view
+            form.save()
             return redirect('login')
     else:
         form = RegistrationForm()
     return render(request, 'register.html', {'form': form})
 
-
+# Emergency contact view
 @login_required
 def emergency_contact_view(request):
     if request.method == 'POST':
@@ -65,67 +48,94 @@ def emergency_contact_view(request):
             emergency_contact.user = request.user
             emergency_contact.save()
 
-            # Send WhatsApp message
-            # to = f"whatsapp:{emergency_contact.contact_phone}"
-            # body = (
-            #     f"Emergency!  is in an emergency situation. "
-            #     f"Location: https://www.google.com/maps?q={request.POST.get('latitude')},{request.POST.get('longitude')}"
-            # )
-            # send_whatsapp_message(to, body)
-
-            # messages.success(request, 'Emergency contact has been registered and notified.')
+            message = f"Hello {emergency_contact.contact_name}, please start a chat with our bot to confirm your chat ID."
+            send_telegram_message(emergency_contact.contact_phone, message)
             return redirect('services')
     else:
         form = EmergencyContactForm()
-
     return render(request, 'services.html', {'form': form})
 
+# Delete emergency contact view
 class EmergencyContactDeleteView(DeleteView):
     model = EmergencyContact
     template_name = 'users/emergency_contact_confirm_delete.html'
     success_url = reverse_lazy('emergency_contact')
 
+# Telegram bot token
+bot_token = settings.TELEGRAM_BOT_TOKEN
+
+# Function to send Telegram message
+def send_telegram_message(chat_id, message):
+    url = f'https://api.telegram.org/bot{bot_token}/sendMessage'
+    payload = {
+        'chat_id': chat_id,
+        'text': message
+    }
+    response = requests.post(url, data=payload)
+    return response.json()
+
+# Send emergency SMS view
 @login_required
 def send_emergency_sms(request):
     user = request.user
-    # Assuming user's location is stored in the first emergency contact for simplicity
-    emergency_contact = EmergencyContact.objects.filter(user=user).first()
-    
-    if emergency_contact:
-        location_url = f"https://www.google.com/maps?q={emergency_contact.latitude},{emergency_contact.longitude}"
-        message = f"Emergency! {user.get_full_name()} is in an emergency. Location: {location_url}"
-        
-        # Initialize Vonage client
-        client = vonage.Client(key='55aace73', secret='fqAQgXcNxNpa2uyj')
-        sms = vonage.Sms(client)
+    emergency_contacts = EmergencyContact.objects.filter(user=user)
 
-        contacts = EmergencyContact.objects.filter(user=user)
-        for contact in contacts:
-            responseData = sms.send_message({
-                "from": "VonageAPI",
-                "to": contact.contact_phone,
-                "text": message,
-            })
+    if not emergency_contacts.exists():
+        return HttpResponse("No emergency contacts found.", status=404)
 
-            if responseData["messages"][0]["status"] == "0":
-                print(f"Message sent to {contact.contact_name}")
-            else:
-                print(f"Message failed with error: {responseData['messages'][0]['error-text']}")
+    location_url = f"https://www.google.com/maps?q={emergency_contacts.first().latitude},{emergency_contacts.first().longitude}"
+    message = f"Emergency! {user.username} is in an emergency and needs your help. Location: {location_url}"
 
-        return render(request, 'services.html', {'message': 'Emergency messages sent successfully!'})
-    else:
-        return render(request, 'services.html', {'message': 'No emergency contact found!'})
+    for contact in emergency_contacts:
+        if contact.chat_id:
+            response = send_telegram_message(contact.chat_id, message)
+            print(response)
 
+    return HttpResponse("Emergency messages sent successfully.")
+
+# Save location view
 @csrf_exempt
 @login_required
-def update_location(request):
+def save_location(request):
     if request.method == 'POST':
         data = json.loads(request.body)
-        user = request.user
-        user.latitude = data.get('latitude')
-        user.longitude = data.get('longitude')
-        user.save()
+        emergency_contacts = EmergencyContact.objects.filter(user=request.user)
+        for contact in emergency_contacts:
+            contact.latitude = data['latitude']
+            contact.longitude = data['longitude']
+            contact.save()
         return JsonResponse({'status': 'success'})
-    return JsonResponse({'status': 'fail'}, status=400)
+    return JsonResponse({'status': 'error'})
 
+# Register chat ID view
+@login_required
+def register_chat_id(request):
+    if request.method == 'POST':
+        chat_id = request.POST.get('chat_id')
+        contact_id = request.POST.get('contact_id')
+        contact = EmergencyContact.objects.get(id=contact_id, user=request.user)
+        contact.chat_id = chat_id
+        contact.save()
+        return redirect('services')
+    return JsonResponse({'status': 'error'})
 
+# Telegram bot handler functions
+from telegram.ext import Updater, CommandHandler, MessageHandler, filters
+
+def start(update, context):
+    update.message.reply_text('Hello! Send /getid to get your chat ID.')
+
+def get_id(update, context):
+    chat_id = update.message.chat_id
+    update.message.reply_text(f'Your chat ID is: {chat_id}')
+
+def main():
+    updater = Updater(bot_token, use_context=True)
+    dp = updater.dispatcher
+    dp.add_handler(CommandHandler("start", start))
+    dp.add_handler(CommandHandler("getid", get_id))
+    updater.start_polling()
+    updater.idle()
+
+if __name__ == '__main__':
+    main()
