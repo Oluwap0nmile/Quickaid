@@ -89,6 +89,9 @@ WSGI_APPLICATION = 'Quickaid.wsgi.application'
 
 
 TELEGRAM_BOT_TOKEN = '7434036135:AAFap6m_cje5igj5gvj4NUMGcxuxlx7PYEM'
+# settings.py
+GOOGLE_API_KEY = 'AIzaSyCWNkNcP_bWPCfcFL3fLMcRvQ0dj3Mb7pw'
+
 
 # settings.py
 

@@ -76,6 +76,7 @@ def send_telegram_message(chat_id, message):
 
 # Send emergency SMS view
 @login_required
+
 def send_emergency_sms(request):
     user = request.user
     emergency_contacts = EmergencyContact.objects.filter(user=user)
@@ -83,7 +84,16 @@ def send_emergency_sms(request):
     if not emergency_contacts.exists():
         return HttpResponse("No emergency contacts found.", status=404)
 
-    location_url = f"https://www.google.com/maps?q={emergency_contacts.first().latitude},{emergency_contacts.first().longitude}"
+    user_profile = emergency_contacts.first()
+    latitude = user_profile.latitude
+    longitude = user_profile.longitude
+
+    if latitude is None or longitude is None:
+        latitude, longitude = get_location()
+        if latitude is None or longitude is None:
+            return HttpResponse("Could not retrieve location.", status=500)
+
+    location_url = f"https://www.google.com/maps?q={latitude},{longitude}"
     message = f"Emergency! {user.username} is in an emergency and needs your help. Location: {location_url}"
 
     for contact in emergency_contacts:
@@ -93,18 +103,21 @@ def send_emergency_sms(request):
 
     return HttpResponse("Emergency messages sent successfully.")
 
-# Save location view
-@csrf_exempt
+
+# Save location
 @login_required
+@csrf_exempt
 def save_location(request):
     if request.method == 'POST':
         data = json.loads(request.body)
-        emergency_contacts = EmergencyContact.objects.filter(user=request.user)
-        for contact in emergency_contacts:
-            contact.latitude = data['latitude']
-            contact.longitude = data['longitude']
-            contact.save()
-        return JsonResponse({'status': 'success'})
+        latitude = data.get('latitude')
+        longitude = data.get('longitude')
+        if latitude is not None and longitude is not None:
+            user_profile = EmergencyContact.objects.get(user=request.user)
+            user_profile.latitude = latitude
+            user_profile.longitude = longitude
+            user_profile.save()
+            return JsonResponse({'status': 'success'})
     return JsonResponse({'status': 'error'})
 
 # Register chat ID view
@@ -139,3 +152,17 @@ def main():
 
 if __name__ == '__main__':
     main()
+
+
+
+
+def get_location():
+    url = f'https://www.googleapis.com/geolocation/v1/geolocate?key={settings.GOOGLE_API_KEY}'
+    response = requests.post(url)
+    if response.status_code == 200:
+        location = response.json()
+        latitude = location.get('location', {}).get('lat', None)
+        longitude = location.get('location', {}).get('lng', None)
+        return latitude, longitude
+    else:
+        return None, None
