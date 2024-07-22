@@ -77,6 +77,8 @@ def send_telegram_message(chat_id, message):
 # Send emergency SMS view
 @login_required
 
+
+
 def send_emergency_sms(request):
     user = request.user
     emergency_contacts = EmergencyContact.objects.filter(user=user)

@@ -1,4 +1,5 @@
 import os
+import dj_database_url
 """
 Django settings for Quickaid project.
 
@@ -21,23 +22,24 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/5.0/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-#i)*)pv&%cxerfku7f)e)_bm&m-^3c%p*2(b5h=$kxm(f4q(no'
-
-# SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+SECRET_KEY = os.getenv('DJANGO_SECRET_KEY', 'your-default-secret-key')
+DEBUG = os.getenv('DJANGO_DEBUG', 'False') == 'True'
 
 ALLOWED_HOSTS = [
     '127.0.0.1',
     'localhost',
     '54ef-102-89-34-96.ngrok-free.app',  
-    '192.168.0.137'
+    '192.168.0.137',
+    '192.168.0.106',
     '916c-102-89-32-128.ngrok-free.app',
-    '916c-102-89-32-128.ngrok-free.app'
+    '916c-102-89-32-128.ngrok-free.app',
+    'quickaid.onrender.com'
 ]
 
 CSRF_TRUSTED_ORIGINS = [
     'https://54ef-102-89-34-96.ngrok-free.app',
-    'https://916c-102-89-32-128.ngrok-free.app'
+    'https://916c-102-89-32-128.ngrok-free.app',
+    'https://quickaid.onrender.com'
 ]
 
 # Application definition
@@ -62,6 +64,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'whitenoise.middleware.WhiteNoiseMiddleware',
 ]
 
 ROOT_URLCONF = 'Quickaid.urls'
@@ -145,6 +148,7 @@ USE_TZ = True
 
 STATIC_URL = 'static/'
 STATICFILES_DIRS = [os.path.join(BASE_DIR, 'static')]
+STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/5.0/ref/settings/#default-auto-field
