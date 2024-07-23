@@ -40,6 +40,7 @@ urllib3==2.2.2
 vonage==3.16.0
 vonage-jwt==1.1.1
 vonage-utils==1.1.2
+waitress==3.0.0
 whitenoise==6.7.0
 wrapt==1.16.0
 yarl==1.9.4

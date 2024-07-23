@@ -1,1 +1,1 @@
-web: gunicorn Quickaid.wsgi --log-file -
+web: waitress-serve --port=$PORT Quickaid.wsgi:application
