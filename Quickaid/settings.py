@@ -54,6 +54,7 @@ INSTALLED_APPS = [
     'Quickaid',
     'users',
     'pages',
+    'whitenoise.runserver_nostatic',
 ]
 
 MIDDLEWARE = [
