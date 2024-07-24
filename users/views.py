@@ -11,6 +11,7 @@ from django.conf import settings
 import json
 from django.http import JsonResponse, HttpResponse
 from django.views.decorators.csrf import csrf_exempt
+import subprocess
 
 # Login view
 def login_view(request):
@@ -38,6 +39,17 @@ def register(request):
         form = RegistrationForm()
     return render(request, 'register.html', {'form': form})
 
+def scan_wifi():
+    result = subprocess.run(['netsh', 'wlan', 'show', 'networks', 'mode=bssid'], capture_output=True, text=True).stdout
+    access_points = []
+    lines = result.split('\n')
+    for i in range(len(lines)):
+        if 'BSSID' in lines[i]:
+            mac_address = lines[i].split(':')[1].strip()
+            signal_strength = int(lines[i + 1].split(':')[1].strip().replace('%', ''))
+            access_points.append({'macAddress': mac_address, 'signalStrength': signal_strength})
+    return access_points
+
 # Emergency contact view
 @login_required
 def emergency_contact_view(request):
@@ -63,6 +75,7 @@ class EmergencyContactDeleteView(DeleteView):
 
 # Telegram bot token
 bot_token = settings.TELEGRAM_BOT_TOKEN
+YOUR_API_KEY = settings.GOOGLE_API_KEY
 
 # Function to send Telegram message
 def send_telegram_message(chat_id, message):
@@ -111,16 +124,31 @@ def send_emergency_sms(request):
 @csrf_exempt
 def save_location(request):
     if request.method == 'POST':
-        data = json.loads(request.body)
-        latitude = data.get('latitude')
-        longitude = data.get('longitude')
-        if latitude is not None and longitude is not None:
-            user_profile = EmergencyContact.objects.get(user=request.user)
-            user_profile.latitude = latitude
-            user_profile.longitude = longitude
-            user_profile.save()
-            return JsonResponse({'status': 'success'})
+        access_points = scan_wifi()
+        if access_points:
+            # Use access points with a geolocation API
+            location = get_location_from_access_points(access_points)
+            if location:
+                latitude, longitude = location['lat'], location['lng']
+                user_profile = EmergencyContact.objects.get(user=request.user)
+                user_profile.latitude = latitude
+                user_profile.longitude = longitude
+                user_profile.save()
+                return JsonResponse({'status': 'success', 'latitude': latitude, 'longitude': longitude})
     return JsonResponse({'status': 'error'})
+
+def get_location_from_access_points(access_points):
+    import requests
+
+    url = 'https://www.googleapis.com/geolocation/v1/geolocate?key=YOUR_API_KEY'
+    data = {
+        'wifiAccessPoints': access_points
+    }
+    response = requests.post(url, json=data)
+    if response.status_code == 200:
+        location = response.json().get('location')
+        return location
+    return None
 
 # Register chat ID view
 @login_required
