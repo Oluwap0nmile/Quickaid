@@ -1,5 +1,4 @@
 import os
-import dj_database_url
 """
 Django settings for Quickaid project.
 
@@ -16,32 +15,29 @@ from pathlib import Path
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
-DATABASE_URL = 'postgresql://quickaid_mo8t_user:Enb01nvmMcjRyHdce9GkgKm8UoZlgXDC@dpg-cqg2js56l47c73boc5tg-a.oregon-postgres.render.com/quickaid_mo8t'
 
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/5.0/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = os.getenv('DJANGO_SECRET_KEY', 'your-default-secret-key')
-DEBUG = os.getenv('DJANGO_DEBUG', 'False') == 'True'
+SECRET_KEY = 'django-insecure-#i)*)pv&%cxerfku7f)e)_bm&m-^3c%p*2(b5h=$kxm(f4q(no'
 
+# SECURITY WARNING: don't run with debug turned on in production!
+DEBUG = True
 
 ALLOWED_HOSTS = [
     '127.0.0.1',
     'localhost',
     '54ef-102-89-34-96.ngrok-free.app',  
-    '192.168.0.137',
-    '192.168.0.106',
+    '192.168.0.137'
     '916c-102-89-32-128.ngrok-free.app',
-    '916c-102-89-32-128.ngrok-free.app',
-    'quickaid.onrender.com'
+    '916c-102-89-32-128.ngrok-free.app'
 ]
 
 CSRF_TRUSTED_ORIGINS = [
     'https://54ef-102-89-34-96.ngrok-free.app',
-    'https://916c-102-89-32-128.ngrok-free.app',
-    'https://quickaid.onrender.com'
+    'https://916c-102-89-32-128.ngrok-free.app'
 ]
 
 # Application definition
@@ -56,19 +52,16 @@ INSTALLED_APPS = [
     'Quickaid',
     'users',
     'pages',
-    'whitenoise.runserver_nostatic',
 ]
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
-    'whitenoise.middleware.WhiteNoiseMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
-    
 ]
 
 ROOT_URLCONF = 'Quickaid.urls'
@@ -107,15 +100,13 @@ GOOGLE_API_KEY = 'AIzaSyCWNkNcP_bWPCfcFL3fLMcRvQ0dj3Mb7pw'
 
 # Database
 # https://docs.djangoproject.com/en/5.0/ref/settings/#databases
-DATABASES = {
-    'default': dj_database_url.config(default=os.environ.get('DATABASE_URL'))
-}
 
-# DATABASES = {
-#     'default': dj_database_url.config(
-#         default='postgres://myuser:mypassword@localhost:5432/mydatabase'
-#     )
-# }
+DATABASES = {
+    'default': {
+        'ENGINE': 'django.db.backends.sqlite3',
+        'NAME': BASE_DIR / 'db.sqlite3',
+    }
+}
 
 
 # Password validation
@@ -152,16 +143,8 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/5.0/howto/static-files/
 
-STATIC_URL = '/static/'
-STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
+STATIC_URL = 'static/'
 STATICFILES_DIRS = [os.path.join(BASE_DIR, 'static')]
-# STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
-
-
-STATICFILES_STORAGE = 'django.contrib.staticfiles.storage.StaticFilesStorage'
-
-
-
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/5.0/ref/settings/#default-auto-field
