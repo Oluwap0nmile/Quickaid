@@ -118,8 +118,8 @@ def send_emergency_sms(request):
 
     return HttpResponse("Emergency messages sent successfully.")
 
-DEFAULT_LATITUDE = 7.759997711285218   # Example: New York City Latitude
-DEFAULT_LONGITUDE = 4.601843448762301 # Example: New York City Longitude
+DEFAULT_LATITUDE = 7.7612373500083836  # Example: New York City Latitude
+DEFAULT_LONGITUDE = 4.601896550927679  # Example: New York City Longitude
 # Save location
 @login_required
 @csrf_exempt
