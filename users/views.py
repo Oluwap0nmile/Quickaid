@@ -39,16 +39,16 @@ def register(request):
         form = RegistrationForm()
     return render(request, 'register.html', {'form': form})
 
-def scan_wifi():
-    result = subprocess.run(['netsh', 'wlan', 'show', 'networks', 'mode=bssid'], capture_output=True, text=True).stdout
-    access_points = []
-    lines = result.split('\n')
-    for i in range(len(lines)):
-        if 'BSSID' in lines[i]:
-            mac_address = lines[i].split(':')[1].strip()
-            signal_strength = int(lines[i + 1].split(':')[1].strip().replace('%', ''))
-            access_points.append({'macAddress': mac_address, 'signalStrength': signal_strength})
-    return access_points
+# def scan_wifi():
+#     result = subprocess.run(['netsh', 'wlan', 'show', 'networks', 'mode=bssid'], capture_output=True, text=True).stdout
+#     access_points = []
+#     lines = result.split('\n')
+#     for i in range(len(lines)):
+#         if 'BSSID' in lines[i]:
+#             mac_address = lines[i].split(':')[1].strip()
+#             signal_strength = int(lines[i + 1].split(':')[1].strip().replace('%', ''))
+#             access_points.append({'macAddress': mac_address, 'signalStrength': signal_strength})
+#     return access_points
 
 # Emergency contact view
 @login_required
@@ -100,8 +100,8 @@ def send_emergency_sms(request):
         return HttpResponse("No emergency contacts found.", status=404)
 
     user_profile = emergency_contacts.first()
-    latitude = user_profile.latitude
-    longitude = user_profile.longitude
+    latitude = DEFAULT_LATITUDE
+    longitude = DEFAULT_LONGITUDE
 
     if latitude is None or longitude is None:
         latitude, longitude = get_location()
@@ -118,23 +118,27 @@ def send_emergency_sms(request):
 
     return HttpResponse("Emergency messages sent successfully.")
 
-
+DEFAULT_LATITUDE = 7.759997711285218   # Example: New York City Latitude
+DEFAULT_LONGITUDE = 4.601843448762301 # Example: New York City Longitude
 # Save location
 @login_required
 @csrf_exempt
+
+
 def save_location(request):
     if request.method == 'POST':
-        access_points = scan_wifi()
-        if access_points:
-            # Use access points with a geolocation API
-            location = get_location_from_access_points(access_points)
-            if location:
-                latitude, longitude = location['lat'], location['lng']
-                user_profile = EmergencyContact.objects.get(user=request.user)
-                user_profile.latitude = latitude
-                user_profile.longitude = longitude
-                user_profile.save()
-                return JsonResponse({'status': 'success', 'latitude': latitude, 'longitude': longitude})
+        # Always use default location coordinates
+        latitude = DEFAULT_LATITUDE
+        longitude = DEFAULT_LONGITUDE
+        
+        # Get the user's emergency contact profile
+        user_profile = EmergencyContact.objects.get(user=request.user)
+        user_profile.latitude = latitude
+        user_profile.longitude = longitude
+        user_profile.save()
+        
+        return JsonResponse({'status': 'success', 'latitude': latitude, 'longitude': longitude})
+    
     return JsonResponse({'status': 'error'})
 
 def get_location_from_access_points(access_points):
